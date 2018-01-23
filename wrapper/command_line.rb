@@ -1,5 +1,6 @@
+# Wraps command line tools
 class CommandLine
-  def get_args_array
+  def args_array
     ARGV
   end
 end

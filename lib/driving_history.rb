@@ -1,0 +1,2 @@
+class DrivingHistory
+end
