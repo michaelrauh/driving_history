@@ -12,6 +12,7 @@ class DrivingHistoryTest < Minitest::Test
 
     @model = Minitest::Mock.new
     @model.expect :train, nil, ['this is a file with words']
+    @model.expect :report, 'this is a report'
 
     @subject = DrivingHistory.new
 
@@ -33,5 +34,9 @@ class DrivingHistoryTest < Minitest::Test
   def test_run_method_builds_a_model_from_file_contents
     @subject.run
     assert_mock @model
+  end
+
+  def test_run_method_returns_model_report
+    assert_equal('this is a report', @subject.run)
   end
 end

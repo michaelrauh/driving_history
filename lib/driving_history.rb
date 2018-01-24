@@ -18,5 +18,6 @@ class DrivingHistory
     filename = @command_line.args_array.first
     file_contents = @file_helper.read(filename)
     @model.train(file_contents)
+    @model.report
   end
 end
