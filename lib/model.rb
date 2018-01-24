@@ -7,8 +7,11 @@ class Model
   end
 
   def train(description)
-    tokens = description.split(' ')
-    tokens.shift
-    drivers << Driver.new(tokens.shift)
+    lines = description.split('\n')
+    lines.each do |line|
+      tokens = line.split(' ')
+      tokens.shift
+      drivers << Driver.new(tokens.shift)
+    end
   end
 end
