@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 require_relative '../lib/driving_history.rb'
-require_relative '../wrapper/command_line.rb'
 
 class DrivingHistoryTest < Minitest::Test
   def setup
