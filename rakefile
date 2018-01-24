@@ -2,3 +2,7 @@ task :default => :test
 task :test do
   Dir.glob('./test/*_test.rb').each { |file| require file }
 end
+
+task :acceptance do
+  Dir.glob('./acceptance/*_test.rb').each { |file| require file }
+end
