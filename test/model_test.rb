@@ -42,7 +42,7 @@ class ModelTest < Minitest::Test
 
   def configure_trip_mock
     @trip = Minitest::Mock.new
-    @trip.expect(:configure, nil, ['Dan', Time.parse('07:15'),
+    @trip.expect(:configure, nil, [Time.parse('07:15'),
                                    Time.parse('07:45'), 17.3])
     @driver.expect(:add_trip, nil, [@trip])
 

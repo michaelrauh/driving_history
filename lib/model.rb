@@ -36,7 +36,7 @@ class Model
 
   def add_trip(driver_name, args)
     trip = @trip_provider.make
-    trip.configure(driver_name, Time.parse(args.shift),
+    trip.configure(Time.parse(args.shift),
                    Time.parse(args.shift), args.shift.to_f)
     drivers[driver_name].add_trip(trip)
   end
