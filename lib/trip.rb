@@ -15,4 +15,8 @@ class Trip
     hours = (end_time - start_time) / SECONDS_PER_HOUR
     @speed = distance / hours
   end
+
+  def valid?
+    @speed > 5 && @speed < 100
+  end
 end
