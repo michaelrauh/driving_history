@@ -13,7 +13,7 @@ class ModelTest < Minitest::Test
 
     @subject.driver_provider = driver_provider
 
-    @subject.train('Driver Dan\nDriver Alex')
+    @subject.train("Driver Dan\nDriver Alex")
 
     assert_mock driver
     assert_mock driver2
@@ -31,7 +31,7 @@ class ModelTest < Minitest::Test
     @subject.trip_provider = trip_provider
     @subject.driver_provider = driver_provider
 
-    @subject.train('Driver Dan\nTrip Dan 07:15 07:45 17.3')
+    @subject.train("Driver Dan\nTrip Dan 07:15 07:45 17.3")
 
     assert_mock driver
   end
@@ -50,7 +50,7 @@ class ModelTest < Minitest::Test
     driver2 = mock_report_driver('Bob: 55 miles @ 30 mph', 55)
     @subject.drivers['Bob'] = driver2
 
-    expected = 'Bob: 55 miles @ 30 mph\nAlex: 40 miles @ 10 mph'
+    expected = "Bob: 55 miles @ 30 mph\nAlex: 40 miles @ 10 mph"
 
     assert_equal(expected, @subject.report)
   end

@@ -15,7 +15,7 @@ class Model
   end
 
   def train(description)
-    description.split('\n').each do |line|
+    description.split("\n").each do |line|
       tokens = line.split(' ')
       command, driver_name = tokens.shift(2)
       if command == 'Driver'
@@ -27,7 +27,7 @@ class Model
   end
 
   def report
-    ordered_drivers.map(&:report).join('\n')
+    ordered_drivers.map(&:report).join("\n")
   end
 
   private

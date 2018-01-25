@@ -33,6 +33,12 @@ class DriverTest < Minitest::Test
     assert_equal('Dan: 0 miles', @subject.report)
   end
 
+  def test_miles_is_zero_for_no_trips
+    @subject.name = 'Dan'
+
+    assert_equal(0, @subject.miles)
+  end
+
   def test_report_reports_on_multiple_trips
     @subject.add_trip(make_mock_trip(15.3, 5.7, true))
     @subject.add_trip(make_mock_trip(4, 58, true))
@@ -40,7 +46,7 @@ class DriverTest < Minitest::Test
 
     @subject.name = 'Dan'
 
-    assert_equal('Dan: 65 miles @ 5 mph', @subject.report)
+    assert_equal('Dan: 65 miles @ 4 mph', @subject.report)
   end
 
   private

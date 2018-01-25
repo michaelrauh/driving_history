@@ -18,7 +18,7 @@ class Driver
   end
 
   def miles
-    @trips.map(&:miles).reduce(&:+)
+    @trips.map(&:miles).reduce(0, &:+)
   end
 
   def ==(other)
@@ -28,6 +28,8 @@ class Driver
   private
 
   def speed
-    (@trips.map { |trip| trip.speed * trip.miles }.reduce(&:+) / miles)
+    total_distance = @trips.map(&:miles).reduce(&:+)
+    total_time = @trips.map { |trip| trip.miles / trip.speed }.reduce(&:+)
+    total_distance / total_time
   end
 end
