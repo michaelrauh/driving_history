@@ -4,7 +4,9 @@
 To set up the project run `bundle`
 
 ## Running the tests
-To run the unit tests, run `rake`
+  * To run the unit tests, run `rake`
+  * To run the acceptance test, run `rake acceptance`
+
 
 ## Running the project
 To run the project, run `ruby lib/driving_history datafile` where `datafile` is the name of a file containing properly formatted input data
