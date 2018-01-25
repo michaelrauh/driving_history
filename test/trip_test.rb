@@ -11,4 +11,9 @@ class TripTest < Minitest::Test
     @subject.configure(Time.parse('07:15'), Time.parse('07:45'), 17.3)
     assert_equal(17.3, @subject.miles)
   end
+
+  def test_configuring_a_valid_trip_results_in_correct_speed
+    @subject.configure(Time.parse('07:15'), Time.parse('07:45'), 17.3)
+    assert_equal(34.6, @subject.speed)
+  end
 end
