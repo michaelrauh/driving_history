@@ -8,22 +8,26 @@ class Driver
   end
 
   def add_trip(trip)
-    @trips << trip
+    @trips << trip if trip.valid?
   end
 
   def report
-    "#{name}: #{round_distance} miles @ #{round_speed} mph"
+    return "#{name}: 0 miles" if @trips.empty?
+
+    "#{name}: #{miles.round} miles @ #{speed.round} mph"
   end
 
-  def round_distance
-    @trips.first.distance.round
-  end
-
-  def round_speed
-    @trips.first.speed.round
+  def miles
+    @trips.map(&:miles).reduce(&:+)
   end
 
   def ==(other)
     name == other.name
+  end
+
+  private
+
+  def speed
+    (@trips.map { |trip| trip.speed * trip.miles }.reduce(&:+) / miles)
   end
 end

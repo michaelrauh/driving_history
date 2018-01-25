@@ -6,20 +6,52 @@ class DriverTest < Minitest::Test
     @subject = Driver.new
   end
 
-  def test_add_trip_registers_trip
+  def test_add_trip_registers_valid_trip
     trip = Minitest::Mock.new
+    trip.expect(:valid?, true)
     @subject.add_trip(trip)
     assert_equal([trip], @subject.trips)
   end
 
-  def test_report_reports_on_single_trip
+  def test_add_trip_registers_does_not_register_invalid_trips
     trip = Minitest::Mock.new
-    trip.expect(:speed, 15.3)
-    trip.expect(:distance, 5.7)
-
+    trip.expect(:valid?, false)
     @subject.add_trip(trip)
+    assert_equal([], @subject.trips)
+  end
+
+  def test_report_reports_on_single_trip
+    @subject.add_trip(make_mock_trip(15.3, 5.7, true))
     @subject.name = 'Dan'
 
     assert_equal('Dan: 6 miles @ 15 mph', @subject.report)
+  end
+
+  def test_report_reports_on_no_trips
+    @subject.name = 'Dan'
+
+    assert_equal('Dan: 0 miles', @subject.report)
+  end
+
+  def test_report_reports_on_multiple_trips
+    @subject.add_trip(make_mock_trip(15.3, 5.7, true))
+    @subject.add_trip(make_mock_trip(4, 58, true))
+    @subject.add_trip(make_mock_trip(4, 1.4, true))
+
+    @subject.name = 'Dan'
+
+    assert_equal('Dan: 65 miles @ 5 mph', @subject.report)
+  end
+
+  private
+
+  def make_mock_trip(speed, miles, valid)
+    trip = Minitest::Mock.new
+    trip.expect(:speed, speed)
+    trip.expect(:miles, miles)
+    trip.expect(:miles, miles)
+    trip.expect(:miles, miles)
+    trip.expect(:valid?, valid)
+    trip
   end
 end
