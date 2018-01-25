@@ -27,10 +27,14 @@ class Model
   end
 
   def report
-    drivers.values.sort_by(&:miles).reverse.map(&:report).join('\n')
+    ordered_drivers.map(&:report).join('\n')
   end
 
   private
+
+  def ordered_drivers
+    drivers.values.sort_by(&:miles).reverse
+  end
 
   def add_driver(driver_name)
     driver = @driver_provider.make
