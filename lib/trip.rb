@@ -11,8 +11,9 @@ class Trip
   end
 
   def configure(start_time, end_time, distance)
-    @miles = distance
     hours = (end_time - start_time) / SECONDS_PER_HOUR
+
+    @miles = distance
     @speed = distance / hours
   end
 
