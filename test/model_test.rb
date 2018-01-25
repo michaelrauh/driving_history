@@ -38,6 +38,14 @@ class ModelTest < Minitest::Test
     assert_mock @trip
   end
 
+  def test_model_report_returns_formatted_string_for_driver
+    @subject.drivers['Alex'] = @driver
+    @driver.expect(:report, 'Alex: 42 miles @ 34 mph')
+    result = @subject.report
+
+    assert_equal('Alex: 42 miles @ 34 mph', result)
+  end
+
   private
 
   def configure_trip_mock

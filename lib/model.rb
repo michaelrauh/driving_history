@@ -26,6 +26,10 @@ class Model
     end
   end
 
+  def report
+    drivers.values.first.report
+  end
+
   private
 
   def add_driver(driver_name)
