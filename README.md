@@ -15,6 +15,8 @@ For the sake of following the prompt and keeping the code simple, a number of as
 * The command line argument for the data file points to a file that can be found
 * The data file that is passed to the program is non-empty
 * The data file does not reference trips by drivers before those drivers are registered
+* The driver names within the data file are distinct
+* The data file is not so large that it cannot be loaded into memory
 * Each line in the data file starts with a valid command
 * Each line in the data file is properly formatted and ends with a newline
 * Data is considered improperly formatted if the start time is not before the end time, or if midnight is passed
