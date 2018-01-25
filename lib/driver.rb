@@ -11,6 +11,18 @@ class Driver
     @trips << trip
   end
 
+  def report
+    "#{name}: #{round_distance} miles @ #{round_speed} mph"
+  end
+
+  def round_distance
+    @trips.first.distance.round
+  end
+
+  def round_speed
+    @trips.first.speed.round
+  end
+
   def ==(other)
     name == other.name
   end

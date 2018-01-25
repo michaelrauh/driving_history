@@ -11,4 +11,15 @@ class DriverTest < Minitest::Test
     @subject.add_trip(trip)
     assert_equal([trip], @subject.trips)
   end
+
+  def test_report_reports_on_single_trip
+    trip = Minitest::Mock.new
+    trip.expect(:speed, 15.3)
+    trip.expect(:distance, 5.7)
+
+    @subject.add_trip(trip)
+    @subject.name = 'Dan'
+
+    assert_equal('Dan: 6 miles @ 15 mph', @subject.report)
+  end
 end
