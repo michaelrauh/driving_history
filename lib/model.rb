@@ -27,7 +27,7 @@ class Model
   end
 
   def report
-    drivers.values.first.report
+    drivers.values.sort_by(&:miles).reverse.map(&:report).join('\n')
   end
 
   private

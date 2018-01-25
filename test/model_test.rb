@@ -41,9 +41,24 @@ class ModelTest < Minitest::Test
   def test_model_report_returns_formatted_string_for_driver
     @subject.drivers['Alex'] = @driver
     @driver.expect(:report, 'Alex: 42 miles @ 34 mph')
-    result = @subject.report
+    @driver.expect(:miles, 42)
 
-    assert_equal('Alex: 42 miles @ 34 mph', result)
+    assert_equal('Alex: 42 miles @ 34 mph', @subject.report)
+  end
+
+  def test_model_report_returns_drivers_in_miles_driven_order_descending
+    @driver2 = Minitest::Mock.new
+    @driver2.expect(:report, 'Alex: 40 miles @ 10 mph')
+    @driver2.expect(:miles, 40)
+    @subject.drivers['Alex'] = @driver2
+
+    @driver3 = Minitest::Mock.new
+    @driver3.expect(:report, 'Bob: 55 miles @ 30 mph')
+    @driver3.expect(:miles, 55)
+    @subject.drivers['Bob'] = @driver3
+    expected = 'Bob: 55 miles @ 30 mph\nAlex: 40 miles @ 10 mph'
+
+    assert_equal(expected, @subject.report)
   end
 
   private
