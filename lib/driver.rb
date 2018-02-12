@@ -17,6 +17,22 @@ class Driver
     "#{name}: #{miles.round} miles @ #{speed.round} mph"
   end
 
+  def report_highway
+    return "#{name}: 0% highway" if @trips.empty?
+
+    highway_miles = 0
+    trips.each do |trip|
+      if trip.speed >= 50
+        highway_miles += trip.miles
+      end
+    end
+
+    percent = (highway_miles.to_f/miles)
+    percent = percent * 100
+    percent = percent.round
+    return "#{name}: #{percent}% highway"
+  end
+
   def miles
     @trips.map(&:miles).reduce(0, &:+)
   end

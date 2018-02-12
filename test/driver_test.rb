@@ -49,6 +49,21 @@ class DriverTest < Minitest::Test
     assert_equal('Dan: 65 miles @ 4 mph', @subject.report)
   end
 
+  def test_report_highway_returns0PercentForNoTrips
+    @subject.name = 'Dan'
+
+    assert_equal('Dan: 0% highway', @subject.report_highway)
+  end
+
+  def test_report_highway_reports_percentage_trips_highway
+    @subject.name = 'Dan'
+
+    @subject.add_trip(make_mock_trip(75, 10, true))
+    @subject.add_trip(make_mock_trip(4, 10, true))
+
+    assert_equal('Dan: 50% highway', @subject.report_highway)
+  end
+
   private
 
   def make_mock_trip(speed, miles, valid)
