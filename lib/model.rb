@@ -27,7 +27,10 @@ class Model
   end
 
   def report
-    ordered_drivers.map(&:report).join("\n")
+    ans = ordered_drivers.map(&:report).join("\n")
+    ans += "\n"
+    ans += ordered_drivers.map(&:report_highway).join("\n")
+    ans
   end
 
   private

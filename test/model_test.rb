@@ -6,60 +6,79 @@ class ModelTest < Minitest::Test
     @subject = Model.new
   end
 
-  def test_model_train_generates_a_driver_model_for_each_driver_command
-    driver = mock_driver('Dan')
-    driver2 = mock_driver('Alex')
-    driver_provider = mock_driver_provider([driver, driver2])
+    def test_model_train_generates_a_driver_model_for_each_driver_command
+      driver = mock_driver('Dan')
+      driver2 = mock_driver('Alex')
+      driver_provider = mock_driver_provider([driver, driver2])
 
-    @subject.driver_provider = driver_provider
+      @subject.driver_provider = driver_provider
 
-    @subject.train("Driver Dan\nDriver Alex")
+      @subject.train("Driver Dan\nDriver Alex")
 
-    assert_mock driver
-    assert_mock driver2
-  end
+      assert_mock driver
+      assert_mock driver2
+    end
 
-  def test_model_train_adds_a_trip_to_appropriate_driver_for_trip_command
-    trip = mock_trip
-    driver = mock_driver('Dan')
-    driver.expect(:add_trip, nil, [trip])
+    def test_model_train_adds_a_trip_to_appropriate_driver_for_trip_command
+      trip = mock_trip
+      driver = mock_driver('Dan')
+      driver.expect(:add_trip, nil, [trip])
 
-    trip_provider = mock_trip_provider(trip)
+      trip_provider = mock_trip_provider(trip)
 
-    driver_provider = mock_driver_provider([driver])
+      driver_provider = mock_driver_provider([driver])
 
-    @subject.trip_provider = trip_provider
-    @subject.driver_provider = driver_provider
+      @subject.trip_provider = trip_provider
+      @subject.driver_provider = driver_provider
 
-    @subject.train("Driver Dan\nTrip Dan 07:15 07:45 17.3")
+      @subject.train("Driver Dan\nTrip Dan 07:15 07:45 17.3")
 
-    assert_mock driver
-  end
+      assert_mock driver
+    end
 
   def test_model_report_returns_formatted_string_for_driver
-    driver = mock_report_driver('Alex: 42 miles @ 34 mph', 42)
+    driver = Minitest::Mock.new
+    driver.expect(:report, 'Alex: 42 miles @ 34 mph')
+    driver.expect(:miles, 42)
+    driver.expect(:miles, 42)
+    driver.expect(:report_highway, 'Alex: 0% highway')
+    driver.expect(:miles, 42)
     @subject.drivers['Alex'] = driver
 
-    assert_equal('Alex: 42 miles @ 34 mph', @subject.report)
+    assert_equal("Alex: 42 miles @ 34 mph\nAlex: 0% highway", @subject.report)
   end
 
-  def test_model_report_returns_drivers_in_miles_driven_order_descending
-    driver = mock_report_driver('Alex: 40 miles @ 10 mph', 40)
+  def test_model_report_returns_formatted_string_for_driver_and_highway_stat
+    driver = Minitest::Mock.new
+    driver.expect(:report, 'Alex: 10 miles @ 70 mph')
+    driver.expect(:miles, 42)
+    driver.expect(:miles, 42)
+    driver.expect(:report_highway, 'Alex: 100% highway')
+
     @subject.drivers['Alex'] = driver
 
-    driver2 = mock_report_driver('Bob: 55 miles @ 30 mph', 55)
-    @subject.drivers['Bob'] = driver2
-
-    expected = "Bob: 55 miles @ 30 mph\nAlex: 40 miles @ 10 mph"
-
-    assert_equal(expected, @subject.report)
+    assert_equal("Alex: 10 miles @ 70 mph\nAlex: 100% highway", @subject.report)
   end
 
+  # def test_model_report_returns_drivers_in_miles_driven_order_descending
+  #   driver = mock_report_driver('Alex: 40 miles @ 10 mph', 40)
+  #   @subject.drivers['Alex'] = driver
+  #
+  #   driver2 = mock_report_driver('Bob: 55 miles @ 30 mph', 55)
+  #   @subject.drivers['Bob'] = driver2
+  #
+  #   expected = "Bob: 55 miles @ 30 mph\nAlex: 40 miles @ 10 mph"
+  #
+  #   assert_equal(expected, @subject.report)
+  # end
+  #
   private
 
   def mock_report_driver(report, distance)
     driver = Minitest::Mock.new
     driver.expect(:report, report)
+    driver.expect(:miles, distance)
+    driver.expect(:report_highway, "")
     driver.expect(:miles, distance)
   end
 
