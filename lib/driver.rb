@@ -20,17 +20,7 @@ class Driver
   def report_highway
     return "#{name}: 0% highway" if @trips.empty?
 
-    highway_miles = 0
-    trips.each do |trip|
-      if trip.speed >= 50
-        highway_miles += trip.miles
-      end
-    end
-
-    percent = (highway_miles.to_f/miles)
-    percent = percent * 100
-    percent = percent.round
-    return "#{name}: #{percent}% highway"
+    "#{name}: #{highway_miles_percent}% highway"
   end
 
   def miles
@@ -42,6 +32,20 @@ class Driver
   end
 
   private
+
+  def highway_miles_percent
+    ((highway_miles.to_f/miles) * 100).round
+  end
+
+  def highway_miles
+    highway_miles = 0
+    trips.each do |trip|
+      if trip.speed >= 50
+        highway_miles += trip.miles
+      end
+    end
+    highway_miles
+  end
 
   def speed
     total_distance = @trips.map(&:miles).reduce(&:+)
