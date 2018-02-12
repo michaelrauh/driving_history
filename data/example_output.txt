@@ -1,1 +1,6 @@
-"Alex: 42 miles @ 34 mph\nDan: 39 miles @ 47 mph\nBob: 0 miles\nAlex: 0% highway\nDan: 56% highway\nBob: 0% highway"
+Alex: 42 miles @ 34 mph
+Dan: 39 miles @ 47 mph
+Bob: 0 miles
+Alex: 0% highway
+Dan: 56% highway
+Bob: 0% highway
